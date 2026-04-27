@@ -41,6 +41,11 @@ class ComputeRequest(BaseModel):
     formulas: List[FormulaRow] | None = None
 
 app = FastAPI(title="Manufacturing Lead Time Web App")
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+
+BASE_DIR = Path(__file__).resolve().parent
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 def normalize_text(value) -> str:
